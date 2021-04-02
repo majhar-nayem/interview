@@ -6,11 +6,8 @@ use App\Http\Requests\ProductFilterRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
-use App\Models\ProductVariant;
-use App\Models\ProductVariantPrice;
 use App\Models\Variant;
 use App\Traits\UploadFile;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
