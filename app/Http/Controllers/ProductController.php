@@ -23,7 +23,14 @@ class ProductController extends Controller
 
     public function productFilter(ProductFilterRequest $request)
     {
+        $product = Product::with(['productVariants', 'variantPrice'])
+            ->whereDate('created_at',$request->date)
+            ->whereHas('variantPrice', function ($query) use ($request){
+                $query->whereBetween('price',[$request->price_from, $request->price_to]);
+            })
+            ->get();
 
+        return view('product.index',compact('product'));
     }
 
     /**
