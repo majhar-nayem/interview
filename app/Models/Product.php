@@ -18,6 +18,10 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
+    public function productVariantPrices(){
+        return $this->hasMany(ProductVariantPrice::class);
+    }
+
     public function variantPrice(){
         return $this->hasOneThrough(ProductVariantPrice::class, ProductVariant::class);
     }
