@@ -111,11 +111,35 @@ class ProductController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Product $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product = $product->update($request->only(['title','sku', 'description']));
+
+        foreach ( $request->images  as $image){
+            $file_path = UploadFile::uploadFile($image->file);
+            $product->productImages()->update([
+                'file_path' => 'storage/'.$file_path,
+                'thumbnail' => $image->thumbnail
+            ]);
+        }
+
+        foreach ($request->product_variants as $variant){
+            $product->productVariants()->update([
+                'variant' => $variant->variant,
+                'variant_id' => $variant->variant_id,
+            ]);
+        }
+
+        foreach ($request->product_variant_prices as $variant_price){
+            $product->productVariantPrices()->update([
+                'price'  => $variant_price->price,
+                'stock'  => $variant_price->stock,
+            ]);
+        }
+
+        return redirect()->intended(route('product.edit'))->with(['message' => "Product Created Successfully"]);
     }
 
     /**
