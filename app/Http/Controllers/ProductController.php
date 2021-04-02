@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductFilterRequest;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantPrice;
@@ -18,6 +19,11 @@ class ProductController extends Controller
     public function index()
     {
         return view('products.index');
+    }
+
+    public function productFilter(ProductFilterRequest $request)
+    {
+
     }
 
     /**
